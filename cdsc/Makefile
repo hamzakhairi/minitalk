@@ -1,0 +1,1 @@
+CFLAG = cc -Wall -Wextra -Werror 

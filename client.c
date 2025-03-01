@@ -1,64 +1,74 @@
-#include <signal.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdio.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   client.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hkhairi <hkhairi@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/28 17:28:35 by hkhairi           #+#    #+#             */
+/*   Updated: 2025/03/01 13:11:30 by hkhairi          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-volatile int ack_received = 0;
+#include "minitalk.h"
 
-void handle_ack(int sig)
+int validation_pid(char *pid)
 {
-    (void)sig;
-    ack_received = 1;
+    int i = 0;
+
+    while (pid[i])
+    {
+        if ((pid[i] < '0') || (pid[i] > '9'))
+            return (0);
+        i++;
+    }
+    return 1;
 }
 
-void send_char(pid_t server_pid, char c)
+void send_character(pid_t server_pid, char character)
 {
-    int bit;
+    int i;
 
-    for (bit = 7; bit >= 0; bit--)
+    i = 0;
+    while (i < 8)
     {
-        ack_received = 0;
-        if ((c >> bit) & 1)
+        if (character & (1 << i))
             kill(server_pid, SIGUSR1);
         else
             kill(server_pid, SIGUSR2);
-
-        while (!ack_received)
-            usleep(100);
+        usleep(600);
+        i++;
     }
 }
 
-void send_message(pid_t server_pid, char *message)
+void send_message(pid_t server_pid, char *mesage)
 {
-    while (*message)
+    size_t i;
+    
+    i = 0;
+    while (mesage[i])
     {
-        send_char(server_pid, *message);
-        message++;
+        send_character(server_pid, mesage[i]);
+        i++;
     }
-    send_char(server_pid, '\0');
+    send_character(server_pid, '\0');
 }
 
 int main(int argc, char **argv)
 {
-    if (argc != 3)
+    pid_t server_pid;
+    if (argc != 3 || argv[1][0] == '\0' || argv[2][0] == '\0')
     {
-        printf("Usage: %s <server_pid> <message>\n", argv[0]);
+        put_str("Usage: ./client <server_pid> <message>\n");
         return (1);
     }
-
-    pid_t server_pid = atoi(argv[1]);
-    if (server_pid <= 0)
+    if (!validation_pid(argv[1]))
     {
-        printf("Invalid PID\n");
+        put_str("incorecte PID\n");
         return (1);
     }
-
-    struct sigaction sa;
-    sa.sa_handler = handle_ack;
-    sa.sa_flags = 0;
-    sigemptyset(&sa.sa_mask);
-    sigaction(SIGUSR1, &sa, NULL);
-
+    server_pid = ft_atoi(argv[1]);
     send_message(server_pid, argv[2]);
+
     return (0);
 }
