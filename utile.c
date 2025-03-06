@@ -6,42 +6,44 @@
 /*   By: hkhairi <hkhairi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 11:22:05 by hkhairi           #+#    #+#             */
-/*   Updated: 2025/03/01 13:13:56 by hkhairi          ###   ########.fr       */
+/*   Updated: 2025/03/05 21:44:34 by hkhairi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int ft_atoi(char *str)
-{
-    int i;
-    int res;
+#include "minitalk.h"
 
-    i = 0;
-    res = 0;
-    while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 32))
-        i++;
-    while ((str[i] >= '0' && str[i] <= '9'))
-    {
-        res = res * 10 + (str[i] - '0');
-        i++;
-    }
-    return (res);
+int	ft_atoi(char *str)
+{
+	int	i;
+	int	res;
+
+	i = 0;
+	res = 0;
+	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 32))
+		i++;
+	while ((str[i] >= '0' && str[i] <= '9'))
+	{
+		res = res * 10 + (str[i] - '0');
+		i++;
+	}
+	return (res);
 }
 
-void put_char(char c)
+void	put_char(char c)
 {
-    write(1, &c, 1);
+	write(1, &c, 1);
 }
 
-void put_str(char *str)
+void	put_str(char *str)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (str[i])
-    {
-        put_char(str[i]);
-        i++;
-    }
+	i = 0;
+	while (str[i])
+	{
+		put_char(str[i]);
+		i++;
+	}
 }
 
 void	ft_putnbr(int n)
@@ -60,6 +62,12 @@ void	ft_putnbr(int n)
 	}
 	else
 	{
-		ft_putchar(n + 48);
+		put_char(n + 48);
 	}
+}
+
+void	fialde_programe(char *str)
+{
+	put_str(str);
+	exit(1);
 }

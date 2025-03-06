@@ -1,15 +1,24 @@
-#include <signal.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdio.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   server.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hkhairi <hkhairi@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/03 00:07:38 by hkhairi           #+#    #+#             */
+/*   Updated: 2025/03/03 14:47:46 by hkhairi          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void handle_signal(int sig, siginfo_t *siginfo, void *context)
+#include "minitalk.h"
+
+void	handle_signal(int sig, siginfo_t *siginfo, void *context)
 {
-    static int				index;
+	static int				index;
 	static int				pid;
 	static unsigned char	character;
 
-    (void)context;
+	(void)context;
 	if (pid == 0 || pid != siginfo->si_pid)
 	{
 		pid = siginfo->si_pid;
@@ -28,15 +37,19 @@ void handle_signal(int sig, siginfo_t *siginfo, void *context)
 	}
 }
 
-int main(void)
+int	main(void)
 {
 	struct sigaction	sa;
 
-	put_str("Server PID = {%d}\n", getpid());
+	put_str("Server PID = ");
+	ft_putnbr(getpid());
+	put_str("\n");
 	sa.sa_sigaction = &handle_signal;
 	sa.sa_flags = SA_SIGINFO;
-	sigaction(SIGUSR1, &sa, NULL);
-	sigaction(SIGUSR2, &sa, NULL);
+	if (-1 == sigaction(SIGUSR1, &sa, NULL))
+		fialde_programe("Error : sigaction failde !\n");
+	if (-1 == sigaction(SIGUSR2, &sa, NULL))
+		fialde_programe("Error : sigaction failde !\n");
 	while (1)
 		pause();
 	return (0);
