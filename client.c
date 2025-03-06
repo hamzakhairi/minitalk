@@ -6,7 +6,7 @@
 /*   By: hkhairi <hkhairi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 17:28:35 by hkhairi           #+#    #+#             */
-/*   Updated: 2025/03/06 15:44:55 by hkhairi          ###   ########.fr       */
+/*   Updated: 2025/03/06 19:54:00 by hkhairi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,19 +37,19 @@ void	send_character(pid_t server_pid, char character)
 		{
 			if (kill(server_pid, SIGUSR1) == -1)
 			{
-				fialde_programe("Error : kill failde !\n");
+				failde_programe("Error : kill failde !\n");
 			}
 		}
 		else
 		{
 			if (kill(server_pid, SIGUSR2) == -1)
 			{
-				fialde_programe("Error : kill failde !\n");
+				failde_programe("Error : kill failde !\n");
 			}
 		}
 		if (usleep(600) == -1)
 		{
-			fialde_programe("Error : usleep failde !\n");
+			failde_programe("Error : usleep failde !\n");
 		}
 		i++;
 	}

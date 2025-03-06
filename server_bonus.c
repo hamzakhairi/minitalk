@@ -6,7 +6,7 @@
 /*   By: hkhairi <hkhairi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 00:17:29 by hkhairi           #+#    #+#             */
-/*   Updated: 2025/03/06 15:59:31 by hkhairi          ###   ########.fr       */
+/*   Updated: 2025/03/06 20:16:20 by hkhairi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,11 @@
 
 void	send_signal(pid_t g_client_pid)
 {
+	if (usleep(600) == -1)
+		failde_programe("Error : usleep failde !\n");
 	if (-1 == kill(g_client_pid, SIGUSR1))
 	{
-		fialde_programe("Error : kille faild !\n");
+		failde_programe("Error : kille faild !\n");
 	}
 }
 
@@ -54,13 +56,13 @@ int	main(void)
 	put_str("Server PID = ");
 	ft_putnbr(getpid());
 	put_str("\n");
-	sa.sa_sigaction = handle_signal;
+	sa.sa_sigaction = &handle_signal;
 	sa.sa_flags = SA_SIGINFO;
 	sigemptyset(&sa.sa_mask);
 	if (-1 == sigaction(SIGUSR1, &sa, NULL))
-		fialde_programe("Error : sigaction failde !\n");
+		failde_programe("Error : sigaction failde !\n");
 	if (-1 == sigaction(SIGUSR2, &sa, NULL))
-		fialde_programe("Error : sigaction failde !\n");
+		failde_programe("Error : sigaction failde !\n");
 	while (1)
 		pause();
 	return (0);

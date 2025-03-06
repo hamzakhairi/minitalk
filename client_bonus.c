@@ -6,7 +6,7 @@
 /*   By: hkhairi <hkhairi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 23:56:39 by hkhairi           #+#    #+#             */
-/*   Updated: 2025/03/06 15:55:24 by hkhairi          ###   ########.fr       */
+/*   Updated: 2025/03/06 20:32:25 by hkhairi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,21 +33,18 @@ void	send_character(pid_t server_pid, char character)
 		{
 			if (kill(server_pid, SIGUSR1) == -1)
 			{
-				fialde_programe("Error : kill failde !\n");
+				failde_programe("Error : kill failde !\n");
 			}
 		}
 		else
 		{
 			if (kill(server_pid, SIGUSR2) == -1)
 			{
-				fialde_programe("Error : kill failde !\n");
+				failde_programe("Error : kill failde !\n");
 			}
 		}
 		if (usleep(600) == -1)
-		{
-			put_str("-");
-			// fialde_programe("Error : 1 usleep failde !\n");
-		}
+			failde_programe("Error : usleep failde !\n");
 		i++;
 	}
 }
@@ -80,7 +77,8 @@ int	main(int argc, char **argv)
 	sa.sa_handler = ack_handler;
 	sa.sa_flags = 0;
 	sigemptyset(&sa.sa_mask);
-	sigaction(SIGUSR1, &sa, NULL);
+	if (-1 == sigaction(SIGUSR1, &sa, NULL))
+		failde_programe("Error : sigaction failde !\n");
 	server_pid = ft_atoi(argv[1]);
 	send_message(server_pid, argv[2]);
 	return (0);

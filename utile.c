@@ -6,7 +6,7 @@
 /*   By: hkhairi <hkhairi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 11:22:05 by hkhairi           #+#    #+#             */
-/*   Updated: 2025/03/05 21:44:34 by hkhairi          ###   ########.fr       */
+/*   Updated: 2025/03/06 19:54:00 by hkhairi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	ft_putnbr(int n)
 	}
 }
 
-void	fialde_programe(char *str)
+void	failde_programe(char *str)
 {
 	put_str(str);
 	exit(1);

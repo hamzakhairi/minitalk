@@ -6,7 +6,7 @@
 /*   By: hkhairi <hkhairi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 00:07:38 by hkhairi           #+#    #+#             */
-/*   Updated: 2025/03/03 14:47:46 by hkhairi          ###   ########.fr       */
+/*   Updated: 2025/03/06 19:54:00 by hkhairi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ int	main(void)
 	sa.sa_sigaction = &handle_signal;
 	sa.sa_flags = SA_SIGINFO;
 	if (-1 == sigaction(SIGUSR1, &sa, NULL))
-		fialde_programe("Error : sigaction failde !\n");
+		failde_programe("Error : sigaction failde !\n");
 	if (-1 == sigaction(SIGUSR2, &sa, NULL))
-		fialde_programe("Error : sigaction failde !\n");
+		failde_programe("Error : sigaction failde !\n");
 	while (1)
 		pause();
 	return (0);

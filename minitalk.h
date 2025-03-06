@@ -6,7 +6,7 @@
 /*   By: hkhairi <hkhairi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 11:59:54 by hkhairi           #+#    #+#             */
-/*   Updated: 2025/03/03 14:31:57 by hkhairi          ###   ########.fr       */
+/*   Updated: 2025/03/06 19:54:00 by hkhairi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,6 @@ int		ft_atoi(char *str);
 void	put_char(char c);
 void	put_str(char *str);
 void	ft_putnbr(int n);
-void	fialde_programe(char *str);
+void	failde_programe(char *str);
 
 #endif
