@@ -6,7 +6,7 @@
 /*   By: hkhairi <hkhairi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 23:56:39 by hkhairi           #+#    #+#             */
-/*   Updated: 2025/03/06 01:36:31 by hkhairi          ###   ########.fr       */
+/*   Updated: 2025/03/06 15:55:24 by hkhairi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,22 +25,30 @@ void	send_character(pid_t server_pid, char character)
 {
 	int	i;
 
-	i = 7;
-	while (i >= 0)
+	i = 0;
+	while (i < 8)
 	{
 		g_ack_received = 0;
-		if ((character >> i) & 1)
+		if (character & (1 << i))
 		{
 			if (kill(server_pid, SIGUSR1) == -1)
-				fialde_programe("Error: kill failed!\n");
+			{
+				fialde_programe("Error : kill failde !\n");
+			}
 		}
 		else
 		{
 			if (kill(server_pid, SIGUSR2) == -1)
-				fialde_programe("Error: kill failed!\n");
+			{
+				fialde_programe("Error : kill failde !\n");
+			}
 		}
-		usleep(600);
-		i--;
+		if (usleep(600) == -1)
+		{
+			put_str("-");
+			// fialde_programe("Error : 1 usleep failde !\n");
+		}
+		i++;
 	}
 }
 

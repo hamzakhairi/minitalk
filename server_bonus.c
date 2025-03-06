@@ -6,23 +6,13 @@
 /*   By: hkhairi <hkhairi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 00:17:29 by hkhairi           #+#    #+#             */
-/*   Updated: 2025/03/06 02:14:18 by hkhairi          ###   ########.fr       */
+/*   Updated: 2025/03/06 15:59:31 by hkhairi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-static volatile sig_atomic_t	g_client_pid = 0;
-
-void	handle_character(char character)
-{
-	if (character == '\0')
-		kill(g_client_pid, SIGUSR1);
-	else
-		write(1, &character, 1);
-}
-
-void	send_signal()
+void	send_signal(pid_t g_client_pid)
 {
 	if (-1 == kill(g_client_pid, SIGUSR1))
 	{
@@ -30,32 +20,30 @@ void	send_signal()
 	}
 }
 
-void	handle_signal(int signum, siginfo_t *info, void *context)
+void	handle_signal(int sig, siginfo_t *siginfo, void *context)
 {
-	static int					bit = 0;
-	static  unsigned char		character = 0;
+	static int				index;
+	static int				pid;
+	static unsigned char	character;
 
 	(void)context;
-	if (g_client_pid == 0 || g_client_pid != info->si_pid)
+	if (pid == 0 || pid != siginfo->si_pid)
 	{
-		g_client_pid = info->si_pid;
-		bit = 0;
+		pid = siginfo->si_pid;
+		index = 0;
 		character = 0;
 	}
-	character = character << 1;
-    if (signum == SIGUSR1)
-    {
-        character = character | 1;
-    }
-	bit++;
-	if (bit == 8)
+	if (sig == SIGUSR1)
+		character |= (1 << index);
+	index++;
+	if (index == 8)
 	{
-		handle_character(character);
-		if (character == '\0')
-			send_signal();
-		bit = 0;
+		if (character != '\0')
+			write(1, &character, 1);
+		else
+			send_signal(pid);
 		character = 0;
-		usleep(500);
+		index = 0;
 	}
 }
 
