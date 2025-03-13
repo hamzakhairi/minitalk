@@ -6,7 +6,7 @@
 #    By: hkhairi <hkhairi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/28 12:01:58 by hkhairi           #+#    #+#              #
-#    Updated: 2025/03/05 22:19:54 by hkhairi          ###   ########.fr        #
+#    Updated: 2025/03/06 22:41:10 by hkhairi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,6 @@ server_bonus: $(OBJ_SERVER_BONUS) $(OBJ_HELP)
 	$(CC) $(CFLAGS) $(OBJ_SERVER_BONUS) $(OBJ_HELP) -o $(NAME_SERVER_BONUS)
 
 bonus: client_bonus server_bonus
-
 
 %.o: %.c $(HEADER_FILE)
 	$(CC) $(CFLAGS) -c $< -o $@

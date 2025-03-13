@@ -6,7 +6,7 @@
 /*   By: hkhairi <hkhairi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 11:59:54 by hkhairi           #+#    #+#             */
-/*   Updated: 2025/03/06 19:54:00 by hkhairi          ###   ########.fr       */
+/*   Updated: 2025/03/08 20:03:39 by hkhairi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include <signal.h>
 # include <unistd.h>
 # include <stdlib.h>
-# include <stdio.h>
 
 int		ft_atoi(char *str);
 void	put_char(char c);

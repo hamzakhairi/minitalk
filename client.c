@@ -6,7 +6,7 @@
 /*   By: hkhairi <hkhairi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 17:28:35 by hkhairi           #+#    #+#             */
-/*   Updated: 2025/03/06 19:54:00 by hkhairi          ###   ########.fr       */
+/*   Updated: 2025/03/10 13:55:00 by hkhairi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,20 +37,18 @@ void	send_character(pid_t server_pid, char character)
 		{
 			if (kill(server_pid, SIGUSR1) == -1)
 			{
-				failde_programe("Error : kill failde !\n");
+				failde_programe("Error : (client 1) kill failde !\n");
 			}
 		}
 		else
 		{
 			if (kill(server_pid, SIGUSR2) == -1)
 			{
-				failde_programe("Error : kill failde !\n");
+				failde_programe("Error : (client 2) kill failde !\n");
 			}
 		}
-		if (usleep(600) == -1)
-		{
-			failde_programe("Error : usleep failde !\n");
-		}
+		usleep(200);
+		usleep(200);
 		i++;
 	}
 }
@@ -72,7 +70,7 @@ int	main(int argc, char **argv)
 {
 	pid_t	server_pid;
 
-	if (argc != 3 || argv[1][0] == '\0' || argv[2][0] == '\0')
+	if (argc != 3 || argv[1][0] == '\0')
 	{
 		put_str("Usage: ./client <server_pid> <message>\n");
 		return (1);
